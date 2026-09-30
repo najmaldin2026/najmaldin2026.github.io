@@ -1,89 +1,40 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نجم الدين | الأمن السيبراني</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1220;
-      color: white;
-      text-align: center;
-    }
-
-    header {
-      padding: 60px 20px;
-      background: #111c33;
-    }
-
-    h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      font-size: 20px;
-      color: #9fb3c8;
-    }
-
-    section {
-      padding: 35px 20px;
-    }
-
-    .card {
-      max-width: 500px;
-      margin: auto;
-      padding: 25px;
-      background: #16233d;
-      border-radius: 15px;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 25px;
-      background: #16803c;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-    }
-
-    footer {
-      padding: 25px;
-      color: #9fb3c8;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نجم الدين | الأمن السيبراني</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;box-sizing:border-box;font-family:'Cairo',Arial}
+body{background:#0b1220;color:#fff;text-align:center}
+header{padding:70px 20px;background:linear-gradient(180deg,#111c33,#0b1220)}
+h1{font-size:38px;color:#22d3ee;margin-bottom:10px}
+p{color:#9fb3c8;font-size:18px}
+.btn{padding:14px 32px;background:#22c55e;color:#000;border-radius:12px;display:inline-block;margin-top:25px;font-weight:700;text-decoration:none;font-size:18px}
+.card{background:#111c33;border:1px solid #1e293b;padding:20px;border-radius:14px;margin:15px}
+</style>
 </head>
-
 <body>
+<header>
+<h1>نجم الدين أحمد التهامي</h1>
+<p>خبير الأمن السيبراني | حماية واسترداد الحسابات</p>
+<a class="btn" id="waBtn">تواصل واتساب 🔒 رقم محمي</a>
+</header>
 
-  <header>
-    <h1>نجم الدين أحمد التهامي</h1>
-    <p class="subtitle">مهتم بالأمن السيبراني والبرمجة</p>
-  </header>
+<div style="padding:30px;max-width:800px;margin:auto">
+<div class="card">🔒 استرداد حسابات فيسبوك وانستقرام</div>
+<div class="card">🛡️ حماية المواقع من الاختراق</div>
+<div class="card">👨‍💻 استشارات أمنية متخصصة</div>
+</div>
 
-  <section>
-    <div class="card">
-      <h2>مهارتي</h2>
-      <p>
-        الأمن السيبراني، حماية الأنظمة، البرمجة وتطوير المواقع.
-      </p>
-
-      <a class="button" href="#about">تعرف عليّ</a>
-    </div>
-  </section>
-
-  <section id="about">
-    <h2>عن الموقع</h2>
-    <p>هذا موقعي الشخصي على الإنترنت.</p>
-  </section>
-
-  <footer>
-    © 2026 نجم الدين
-  </footer>
-
+<script>
+// رقمك مشفر - لا يظهر لأحد في الكود
+const _num = atob("MjQ5OTk2MTU1NDk5");
+document.getElementById("waBtn").onclick = function(){
+  window.open("https://wa.me/"+_num, "_blank");
+}
+</script>
 </body>
 </html>
