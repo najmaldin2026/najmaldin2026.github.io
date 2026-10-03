@@ -1,14 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة نجم | الأمن السيبراني</title>
+<style>
+body{margin:0;background:#020617;color:#fff;font-family:Arial;text-align:center;padding:40px 15px}
+.box{max-width:400px;margin:0 auto;background:#0f172a;padding:25px;border-radius:16px;border:1px solid #1e293b}
+input{width:100%;padding:14px;border-radius:12px;border:1px solid #1e293b;background:#020617;color:#fff;margin:10px 0}
+button{width:100%;padding:14px;background:#facc15;color:#000;border:0;border-radius:12px;font-weight:900;font-size:18px}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>🛡️ منصة نجم للأمن السيبراني</h2>
+<p>سجل بريدك واحصل على الدورة مجاناً</p>
 <input id="email" type="email" placeholder="بريدك الإلكتروني">
 <button onclick="register()">سجل الآن</button>
-
+<p style="margin-top:10px;font-size:12px;color:#94a3b8">الدعم: 778237657 واتساب</p>
+</div>
 <script>
 async function register(){
- let e = document.getElementById('email').value;
+ let e=document.getElementById('email').value.trim();
+ if(!e.includes('@')){alert('اكتب بريد صحيح');return;}
  await fetch('https://formsubmit.co/ajax/najmaldin2016@gmail.com',{
   method:'POST',
-  headers:{'Content-Type':'application/json'},
-  body: JSON.stringify({email:e, message:'عميل جديد: '+e})
+  headers:{'Content-Type':'application/json','Accept':'application/json'},
+  body:JSON.stringify({email:e,_subject:'عميل جديد - منصة نجم',_captcha:'false',message:'عميل جديد: '+e+' - الوقت: '+new Date().toLocaleString()})
  });
- window.location.href = 'https://wa.me/967778237657?text=السلام عليكم سجلت في منصة نجم: ' + e;
+ window.location.href='https://wa.me/967778237657?text=السلام عليكم سجلت في منصة نجم: '+e;
 }
 </script>
+</body>
+</html>
